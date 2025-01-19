@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kuma-app
+  namespace: kuma
+  labels:
+    name: kuma-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: kuma-app-pod
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name: kuma-app-pod
+    spec:
+      containers:
+        - image: louislam/uptime-kuma:1
+          name: kuma-app
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512M"
+          ports:
+            - containerPort: 3001
+              name: http
+          volumeMounts:
+            - mountPath: /app/data
+              name: data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: local-kuma-pvc
