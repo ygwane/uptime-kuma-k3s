@@ -8,9 +8,12 @@ metadata:
   annotations:
     spec.ingressClassName: traefik
 spec:
+  ingressClassName: tailscale
+  tls:
+    - hosts:
+        - kuma
   rules:
-    - host: kuma.sysgwan.xyz
-      http:
+    - http:
         paths:
           - pathType: Prefix
             path: /
