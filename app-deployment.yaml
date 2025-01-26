@@ -36,4 +36,4 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: local-kuma-pvc
+            claimName: lh-kuma-pvc
